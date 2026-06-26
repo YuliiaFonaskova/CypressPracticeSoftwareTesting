@@ -1,0 +1,20 @@
+{
+  "name": "cypresspracticesoftwaretesting",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run --headless",
+    "cy:chrome": "cypress run --browser chrome --headless",
+    "cy:firefox": "cypress run --browser firefox --headless",
+    "cy:edge": "cypress run --browser edge --headless"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "cypress": "^15.18.0",
+    "mochawesome": "^7.1.4"
+  }
+}
