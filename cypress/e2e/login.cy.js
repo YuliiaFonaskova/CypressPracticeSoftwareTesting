@@ -14,7 +14,7 @@ describe("Login functionality", () => {
   it("Unsuccessful login", () => {
     LoginPage.login(
       Cypress.env("USER_WRONG_EMAIL"),
-      Cypress.env("USER_WRONG_PASSWORD"),
+      Cypress.env("USER_WRONG_PASSWORD")
     );
 
     LoginPage.errorMessage().should("be.visible");

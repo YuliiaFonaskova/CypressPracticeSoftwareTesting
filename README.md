@@ -4,11 +4,11 @@ UI test automation project created with Cypress for the Practice Software Testin
 
 ## Technologies
 
-* JavaScript
-* Cypress
-* Page Object Model (POM)
-* Mochawesome Reporter
-* Environment Variables (cypress.env.json)
+- JavaScript
+- Cypress
+- Page Object Model (POM)
+- Mochawesome Reporter
+- Environment Variables (cypress.env.json)
 
 ## Test Scenarios
 
@@ -51,23 +51,23 @@ package.json
 
 ## Features
 
-* Cross-browser testing
+- Cross-browser testing
 
-  * Chrome
-  * Firefox
-  * Edge
+  - Chrome
+  - Firefox
+  - Edge
 
-* Headless execution
+- Headless execution
 
-* Retry failed tests (2 retries)
+- Retry failed tests (2 retries)
 
-* Screenshots on failure
+- Screenshots on failure
 
-* Video recording of test execution
+- Video recording of test execution
 
-* HTML and JSON reports generated with Mochawesome
+- HTML and JSON reports generated with Mochawesome
 
-* Environment variables stored in `cypress.env.json`
+- Environment variables stored in `cypress.env.json`
 
 ## Installation
 
