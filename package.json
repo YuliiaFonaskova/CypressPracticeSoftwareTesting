@@ -7,14 +7,20 @@
     "cy:run": "cypress run --headless",
     "cy:chrome": "cypress run --browser chrome --headless",
     "cy:firefox": "cypress run --browser firefox --headless",
-    "cy:edge": "cypress run --browser edge --headless"
+    "cy:edge": "cypress run --browser edge --headless",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "cypress": "^15.18.0",
-    "mochawesome": "^7.1.4"
+    "eslint": "^9.39.4",
+    "globals": "^17.7.0",
+    "mochawesome": "^7.1.4",
+    "prettier": "^3.9.4"
   }
 }
