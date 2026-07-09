@@ -1,6 +1,6 @@
 class LoginPage {
   visit() {
-    cy.visit("/auth/login", { failOnStatusCode: false });
+    cy.visit("/auth/login");
   }
   emailField() {
     return cy.get('[data-test="email"]');
