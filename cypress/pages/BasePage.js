@@ -12,10 +12,12 @@ export default class BasePage {
   }
 
   fillField(testId, value, options = {}) {
-    this.getByTestId(testId).clear();
+    const field = this.getByTestId(testId);
 
-    if (value) {
-      this.getByTestId(testId).type(value, options);
+    field.clear();
+
+    if (value !== undefined && value !== null) {
+      field.type(String(value), options);
     }
   }
 }
