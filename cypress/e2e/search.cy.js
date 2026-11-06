@@ -1,16 +1,17 @@
 import MainPage from "../pages/MainPage";
+import testData from "../fixtures/testData.json";
 
 describe("Search functionality", () => {
   beforeEach(() => {
     MainPage.visit();
   });
 
-  it("User searches for an exact product", () => {
-    MainPage.searchProduct("Combination Pliers");
+  it("searches for a product by exact name", () => {
+    MainPage.searchProduct(testData.search.productName);
 
-    MainPage.searchResults()
+    MainPage.searchResults
       .should("have.length.greaterThan", 0)
       .first()
-      .should("contain", "Combination Pliers");
+      .should("contain", testData.search.productName);
   });
 });

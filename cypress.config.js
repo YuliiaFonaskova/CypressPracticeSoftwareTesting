@@ -30,6 +30,16 @@ module.exports = defineConfig({
     },
 
     setupNodeEvents(on, config) {
+      on("before:browser:launch", (browser, launchOptions) => {
+        if (browser.family === "chromium") {
+          launchOptions.args.push(
+            "--disable-blink-features=AutomationControlled"
+          );
+        }
+
+        return launchOptions;
+      });
+
       const missing = REQUIRED_ENV.filter((key) => !process.env[key]);
 
       if (missing.length > 0) {

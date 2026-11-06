@@ -1,6 +1,7 @@
+import { ROUTES } from "../support/routes";
 class MainPage {
   visit() {
-    cy.visit("/");
+    cy.visit(ROUTES.home);
   }
 
   get productNames() {
@@ -11,21 +12,21 @@ class MainPage {
     this.productNames.first().click();
   }
 
-  searchField() {
+  get searchField() {
     return cy.get('[data-test="search-query"]');
   }
 
-  searchButton() {
+  get searchButton() {
     return cy.get('[data-test="search-submit"]');
   }
 
-  searchResults() {
+  get searchResults() {
     return cy.get('[data-test="product-name"]');
   }
 
   searchProduct(productName) {
-    this.searchField().clear().type(productName);
-    this.searchButton().click();
+    this.searchField.clear().type(productName);
+    this.searchButton.click();
   }
 }
 
