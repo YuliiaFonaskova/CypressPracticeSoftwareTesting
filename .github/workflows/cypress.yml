@@ -1,11 +1,15 @@
-```yaml
 name: Cypress Tests
 
 on:
   push:
-    branches: [main, master, refactor/page-objects]
+    branches:
+      - main
+      - master
+      - refactor/page-objects
   pull_request:
-    branches: [main, master]
+    branches:
+      - main
+      - master
 
 jobs:
   lint:
@@ -16,7 +20,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: "lts/*"
 
       - name: Install dependencies
         run: npm ci
@@ -36,7 +40,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: "lts/*"
 
       - name: Install dependencies
         run: npm ci
