@@ -6,12 +6,14 @@ describe("Cart functionality", () => {
     MainPage.visit();
   });
 
-  it("User adds a product to the shopping cart", () => {
+  it("adds a product to the shopping cart", () => {
     MainPage.openFirstProduct();
 
-    ProductPage.addToCartButton().should("be.visible");
+    ProductPage.addToCartButton.should("be.visible");
+    ProductPage.addToCartButton.should("be.enabled");
+
     ProductPage.addToCart();
 
-    ProductPage.cartMessage().should("be.visible");
+    ProductPage.cartMessage.should("be.visible");
   });
 });
