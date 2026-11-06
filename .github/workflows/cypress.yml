@@ -45,6 +45,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check website availability
+        run: curl -I https://practicesoftwaretesting.com
+
       - name: Run Cypress tests
         run: npm run cy:run
         env:
