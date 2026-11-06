@@ -1,23 +1,23 @@
 class ProductPage {
-  productTitle() {
+  get productTitle() {
     return cy.get("h1");
   }
 
-  addToCartButton() {
+  get addToCartButton() {
     return cy.get('[data-test="add-to-cart"]');
   }
 
-  cartMessage() {
+  get cartMessage() {
     return cy.contains("Product added to shopping cart");
   }
 
   addToCart() {
-    this.addToCartButton().click();
+    this.addToCartButton.click();
   }
 
   verifyProductDetailsDisplayed() {
-    this.productTitle().should("be.visible");
-    this.addToCartButton().should("be.visible");
+    this.productTitle.should("be.visible");
+    this.addToCartButton.should("be.visible");
   }
 }
 
