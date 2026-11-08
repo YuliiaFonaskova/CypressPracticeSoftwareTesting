@@ -57,6 +57,20 @@ jobs:
           }
           docker compose -f docker-compose.ci.yml exec -T api php artisan migrate:fresh --seed --force
 
+      - name: Smoke test local API
+        run: |
+          set -x
+          curl -sS -o /tmp/status.json -w 'status: %{http_code}\n' http://localhost:8091/status
+          cat /tmp/status.json
+          curl -sS -o /tmp/brands.json -w 'brands: %{http_code}\n' http://localhost:8091/brands
+          cat /tmp/brands.json
+          curl -sS -o /tmp/products.json -w 'products: %{http_code}\n' 'http://localhost:8091/products?page=1'
+          cat /tmp/products.json
+          curl -sS -o /tmp/login.json -w 'login: %{http_code}\n' -X POST http://localhost:8091/users/login -H 'Content-Type: application/json' --data-raw '{"email":"customer@practicesoftwaretesting.com","password":"welcome01"}'
+          cat /tmp/login.json
+          docker compose -f docker-compose.ci.yml logs --tail=100 api
+          set +x
+
       - name: Run Cypress tests
         run: npm run cy:chrome
         env:
