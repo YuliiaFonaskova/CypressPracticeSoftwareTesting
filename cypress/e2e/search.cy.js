@@ -2,7 +2,7 @@ import MainPage from "../pages/MainPage";
 import ProductPage from "../pages/ProductPage";
 import testData from "../fixtures/testData.json";
 
-describe("Cart functionality", () => {
+describe("Search functionality", () => {
   beforeEach(() => {
     MainPage.visit();
   });
@@ -15,15 +15,15 @@ describe("Cart functionality", () => {
       .contains(testData.search.productName)
       .click();
 
-    ProductPage.productTitle().should(
+    ProductPage.productTitle.should(
       "contain.text",
       testData.search.productName
     );
 
-    ProductPage.addToCartButton().should("be.visible").and("be.enabled");
+    ProductPage.addToCartButton.should("be.visible").and("be.enabled");
 
     ProductPage.addToCart();
 
-    ProductPage.cartMessage().should("be.visible");
+    ProductPage.cartMessage.should("be.visible");
   });
 });

@@ -105,6 +105,21 @@ npm run cy:firefox
 npm run cy:edge
 ```
 
+## Continuous Integration
+
+The public demo is protected by Cloudflare, which returns `403 Forbidden` to GitHub-hosted runners. The CI workflow therefore starts a local copy of the application with Docker before running Cypress:
+
+```bash
+docker compose -f docker-compose.ci.yml up -d --wait
+docker compose -f docker-compose.ci.yml exec -T api php artisan migrate:fresh --seed --force
+```
+
+Cypress then runs against `http://localhost:4200` with the default seeded test account (`customer@practicesoftwaretesting.com` / `welcome01`). Stop and remove the stack with:
+
+```bash
+docker compose -f docker-compose.ci.yml down -v
+```
+
 ## Generate and View Reports
 
 Reports are generated automatically after test execution and can be found in:

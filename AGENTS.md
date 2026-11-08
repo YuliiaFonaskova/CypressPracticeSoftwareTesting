@@ -32,5 +32,5 @@ Compact context for OpenCode sessions. Trust `cypress.config.js` and the filesys
 
 ## CI
 
-- `.github/workflows/cypress.yml`: the lint job runs ESLint then `prettier --check .`; the test job runs `npm run cy:chrome` after a live-site availability check.
-- CI supplies `USER_EMAIL`/`USER_PASSWORD` as GitHub secrets and leaves `BASE_URL` unset (so it defaults to the public site). Workflow triggers include `refactor/page-objects` in addition to `main`/`master`.
+- `.github/workflows/cypress.yml`: the lint job runs ESLint then `prettier --check .`; the test job starts the local Sprint 5 app from `docker-compose.ci.yml`, seeds the database, then runs `npm run cy:chrome` with `BASE_URL=http://localhost:4200`. The public demo is Cloudflare-protected and returns 403 to GitHub-hosted runners, so CI must not target it.
+- CI does not use the GitHub secrets for E2E runs: the local seeded account is set directly in the workflow, and `BASE_URL` points at the local UI. Workflow triggers include `refactor/page-objects` in addition to `main`/`master`.

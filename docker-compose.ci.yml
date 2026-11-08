@@ -1,0 +1,50 @@
+services:
+  db:
+    image: yobasystems/alpine-mariadb:10.6.11
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: toolshop
+    healthcheck:
+      test:
+        ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -proot --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  api:
+    image: testsmith/practice-software-testing-sprint5-api:2.5
+    command: php artisan serve --host=0.0.0.0 --port=8091
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      host: localhost
+      APP_URL: http://localhost:8091
+      DISABLE_LOGGING: "true"
+      PHP_CLI_SERVER_WORKERS: "4"
+    ports:
+      - "8091:8091"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8091/status >/dev/null"]
+      interval: 5s
+      timeout: 5s
+      retries: 60
+
+  ui:
+    image: testsmith/practice-software-testing-sprint5-ui:2.5
+    environment:
+      NG_CLI_ANALYTICS: "false"
+    ports:
+      - "4200:4200"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:4200/ >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 60
