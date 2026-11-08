@@ -1,0 +1,87 @@
+services:
+  db:
+    image: yobasystems/alpine-mariadb:10.6.11
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: toolshop
+    healthcheck:
+      test:
+        ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -proot --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  api:
+    image: testsmith/practice-software-testing-sprint5-api:2.5
+    command: >
+      sh -c "sed -i 's/^DB_HOST=.*/DB_HOST=db/' .env && php-fpm"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      host: localhost
+      APP_URL: http://localhost:8091
+    volumes:
+      - api-public:/var/www/public
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    image: nginx:1.23.3-alpine
+    command:
+      - sh
+      - -c
+      - |
+        cat <<'EOF' > /etc/nginx/conf.d/default.conf
+        server {
+            listen 80;
+            index index.php index.html;
+            root /var/www/public;
+            server_tokens off;
+
+            location / {
+                try_files $$uri /index.php?$$args;
+            }
+
+            location ~ \.php$$ {
+                fastcgi_split_path_info ^(.+\.php)(/.+)$$;
+                fastcgi_pass api:9000;
+                fastcgi_index index.php;
+                include fastcgi_params;
+                fastcgi_param SCRIPT_FILENAME $$document_root$$fastcgi_script_name;
+                fastcgi_param PATH_INFO $$fastcgi_path_info;
+            }
+        }
+        EOF
+        exec nginx -g 'daemon off;'
+    ports:
+      - "8091:80"
+    volumes:
+      - api-public:/var/www/public:ro
+    depends_on:
+      - api
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:80/status >/dev/null"]
+      interval: 5s
+      timeout: 5s
+      retries: 60
+
+  ui:
+    image: testsmith/practice-software-testing-sprint5-ui:2.5
+    environment:
+      NG_CLI_ANALYTICS: "false"
+    ports:
+      - "4200:4200"
+    depends_on:
+      web:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:4200/ >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 60
+
+volumes:
+  api-public:

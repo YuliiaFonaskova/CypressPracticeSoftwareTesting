@@ -10,6 +10,7 @@ on:
     branches:
       - main
       - master
+  workflow_dispatch:
 
 jobs:
   lint:
@@ -21,6 +22,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -34,6 +36,7 @@ jobs:
   test:
     needs: lint
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v4
@@ -41,16 +44,38 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Check website availability
+      - name: Start local Practice Software Testing stack
         run: |
-          curl -I -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" https://practicesoftwaretesting.com
+          docker compose -f docker-compose.ci.yml up -d --wait --pull missing || {
+            docker compose -f docker-compose.ci.yml logs
+            exit 1
+          }
+          docker compose -f docker-compose.ci.yml exec -T api php artisan migrate:fresh --seed --force
+          docker compose -f docker-compose.ci.yml exec -T api php artisan optimize:clear
 
       - name: Run Cypress tests
         run: npm run cy:chrome
         env:
-          USER_EMAIL: ${{ secrets.USER_EMAIL }}
-          USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+          BASE_URL: http://localhost:4200
+          USER_EMAIL: customer@practicesoftwaretesting.com
+          USER_PASSWORD: welcome01
+
+      - name: Upload Cypress artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-artifacts
+          path: |
+            cypress/reports/
+            cypress/screenshots/
+            cypress/videos/
+          retention-days: 7
+
+      - name: Stop local stack
+        if: always()
+        run: docker compose -f docker-compose.ci.yml down -v
