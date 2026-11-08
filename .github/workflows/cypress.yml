@@ -57,28 +57,6 @@ jobs:
           }
           docker compose -f docker-compose.ci.yml exec -T api php artisan migrate:fresh --seed --force
 
-      - name: Smoke test local API
-        run: |
-          set -x
-          curl -sS -o /tmp/status.json -w 'status: %{http_code}\n' http://localhost:8091/status
-          cat /tmp/status.json
-          curl -sS -o /tmp/brands.json -w 'brands: %{http_code}\n' http://localhost:8091/brands
-          cat /tmp/brands.json
-          curl -sS -o /tmp/products.json -w 'products: %{http_code}\n' 'http://localhost:8091/products?page=1'
-          cat /tmp/products.json
-          curl -sS -o /tmp/login.json -w 'login: %{http_code}\n' -X POST http://localhost:8091/users/login -H 'Content-Type: application/json' --data-raw '{"email":"customer@practicesoftwaretesting.com","password":"welcome01"}'
-          cat /tmp/login.json
-          echo '--- laravel log ---'
-          docker compose -f docker-compose.ci.yml exec -T api sh -c 'tail -n 200 storage/logs/laravel.log' || true
-          echo '--- db contents ---'
-          docker compose -f docker-compose.ci.yml exec -T db sh -c 'mysql -uuser -proot toolshop -e "SHOW TABLES; SELECT COUNT(*) AS brands FROM brands; SELECT COUNT(*) AS products FROM products;"' || true
-          echo '--- api cli db ---'
-          docker compose -f docker-compose.ci.yml exec -T api php -r 'require "vendor/autoload.php"; $app = require "bootstrap/app.php"; $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap(); echo "brands=".App\Models\Brand::count().PHP_EOL;' || true
-          echo '--- api env ---'
-          docker compose -f docker-compose.ci.yml exec -T api sh -c 'php -r "echo getenv(\"DB_HOST\"),\"|\",getenv(\"DB_DATABASE\"),\"|\",getenv(\"DB_USERNAME\"),\"|\",getenv(\"CACHE_DRIVER\"),PHP_EOL;"' || true
-          docker compose -f docker-compose.ci.yml logs --tail=200 api db
-          set +x
-
       - name: Run Cypress tests
         run: npm run cy:chrome
         env:

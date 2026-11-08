@@ -15,7 +15,9 @@ services:
 
   api:
     image: testsmith/practice-software-testing-sprint5-api:2.5
-    command: php artisan serve --host=0.0.0.0 --port=8091
+    command: >
+      sh -c "sed -i 's/^DB_HOST=.*/DB_HOST=db/' .env &&
+             php artisan serve --host=0.0.0.0 --port=8091 --no-reload"
     environment:
       DB_HOST: db
       DB_PORT: 3306
