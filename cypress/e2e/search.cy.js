@@ -17,7 +17,7 @@ describe("Cart functionality", () => {
 
     ProductPage.productTitle().should(
       "contain.text",
-      testData.search.productName,
+      testData.search.productName
     );
 
     ProductPage.addToCartButton().should("be.visible").and("be.enabled");
