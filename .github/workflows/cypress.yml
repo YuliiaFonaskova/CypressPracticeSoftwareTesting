@@ -56,6 +56,7 @@ jobs:
             exit 1
           }
           docker compose -f docker-compose.ci.yml exec -T api php artisan migrate:fresh --seed --force
+          docker compose -f docker-compose.ci.yml exec -T api php artisan optimize:clear
 
       - name: Run Cypress tests
         run: npm run cy:chrome
