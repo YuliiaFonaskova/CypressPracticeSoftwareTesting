@@ -21,7 +21,6 @@ services:
       DB_PORT: 3306
       host: localhost
       APP_URL: http://localhost:8091
-      DISABLE_LOGGING: "true"
       PHP_CLI_SERVER_WORKERS: "4"
     ports:
       - "8091:8091"
