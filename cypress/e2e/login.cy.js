@@ -7,7 +7,7 @@ describe("Login functionality", () => {
     LoginPage.visit();
   });
 
-  it("logs in with valid credentials", () => {
+  it("AUTH-01 logs in with valid credentials", () => {
     cy.env(["USER_EMAIL", "USER_PASSWORD"]).then(
       ({ USER_EMAIL, USER_PASSWORD }) => {
         LoginPage.login(USER_EMAIL, USER_PASSWORD);
@@ -17,7 +17,7 @@ describe("Login functionality", () => {
     cy.location("pathname").should("eq", ROUTES.account);
   });
 
-  it("displays an error message with invalid credentials", () => {
+  it("AUTH-02 displays an error message with invalid credentials", () => {
     LoginPage.login(users.invalid.email, users.invalid.password);
 
     LoginPage.errorMessage.should("be.visible").and("not.be.empty");

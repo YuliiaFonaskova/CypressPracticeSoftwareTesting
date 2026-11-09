@@ -25,10 +25,10 @@ Compact context for OpenCode sessions. Trust `cypress.config.js` and the filesys
 
 - `BasePage` is exported as a class; `LoginPage`, `MainPage`, and `ProductPage` export singleton instances.
 - Use `BasePage.getByTestId()` (maps to `[data-test="..."]`) and import `ROUTES` instead of hardcoding paths.
-- Getter properties such as `ProductPage.productTitle`, `addToCartButton`, and `cartMessage` are used without parentheses. `cypress/e2e/search.cy.js` mistakenly calls several as methods and will fail; `cart.cy.js` shows the correct pattern.
+- Getter properties such as `ProductPage.productTitle`, `addToCartButton`, and `cartMessage` are used without parentheses in every spec (`search.cy.js`, `cart.cy.js`); follow that pattern.
 - `allowCypressEnv: false` in `cypress.config.js`: `Cypress.env()` throws. Use `cy.env([...])`.
 - Mochawesome uses `overwrite: false`, so reports accumulate as `cypress/reports/mochawesome_NNN.html`; there is no stable `mochawesome.html`. Reports, screenshots, and videos are gitignored generated output.
-- README project tree is stale: pages are under `cypress/pages/`, not repo-root `pages/`.
+- Project tree in `README.md` is maintained: page objects are under `cypress/pages/`, and test cases live in `docs/test-cases.md`.
 
 ## CI
 

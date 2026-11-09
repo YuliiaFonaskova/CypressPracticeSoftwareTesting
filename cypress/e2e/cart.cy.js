@@ -6,7 +6,7 @@ describe("Cart functionality", () => {
     MainPage.visit();
   });
 
-  it("adds a product to the shopping cart", () => {
+  it("CART-01 adds a product to the shopping cart", () => {
     MainPage.openFirstProduct();
 
     ProductPage.addToCartButton.should("be.visible");

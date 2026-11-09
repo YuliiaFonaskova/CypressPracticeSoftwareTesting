@@ -7,7 +7,7 @@ describe("Search functionality", () => {
     MainPage.visit();
   });
 
-  it("searches for a product and adds it to the shopping cart", () => {
+  it("SRCH-01 searches for a product and adds it to the shopping cart", () => {
     MainPage.searchProduct(testData.search.productName);
 
     MainPage.searchResults

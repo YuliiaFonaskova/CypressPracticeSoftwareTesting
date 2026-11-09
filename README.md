@@ -8,28 +8,76 @@ UI test automation project created with Cypress for the Practice Software Testin
 - Cypress
 - Page Object Model (POM)
 - Mochawesome Reporter
-- Environment Variables (cypress.env.json)
+- Environment Variables (`.env` via `dotenv`)
 
 ## Test Scenarios
 
-✅ Successful login
+- [AUTH-01](docs/test-cases.md#auth-01--login-with-valid-credentials) — Successful login
+- [AUTH-02](docs/test-cases.md#auth-02--login-with-invalid-credentials) — Unsuccessful login
+- [SRCH-01](docs/test-cases.md#srch-01--search-for-a-product-and-add-it-to-the-cart) — Search product
+- [PRD-01](docs/test-cases.md#prd-01--product-details-are-displayed) — View product details
+- [CART-01](docs/test-cases.md#cart-01--add-a-product-to-the-cart) — Add product to cart
 
-✅ Unsuccessful login
+## Test Documentation
 
-✅ Search product
+The full test-case suite lives in [`docs/test-cases.md`](docs/test-cases.md). It
+contains 25 manual test cases across five suites, each with an ID, priority,
+preconditions, steps and expected results. The cases that are already automated
+are linked to their spec files, so every Cypress test can be traced back to a
+test case.
 
-✅ View product details
+| Suite          | Cases             | Automated |
+| -------------- | ----------------- | --------- |
+| Authentication | AUTH-01 … AUTH-07 | 2 of 7    |
+| Search         | SRCH-01 … SRCH-05 | 1 of 5    |
+| Product        | PRD-01 … PRD-04   | 1 of 4    |
+| Cart           | CART-01 … CART-07 | 1 of 7    |
+| Checkout (E2E) | E2E-01 … E2E-02   | 0 of 2    |
 
-✅ Add product to cart
+The coverage matrix in that document lists the exact spec file (or the missing
+one) for every case, together with the known gaps and the recommended automation
+order.
+
+## AI-Assisted Development
+
+Parts of this project are written with [OpenCode](https://opencode.ai), an
+open-source AI coding agent that works directly against the repository. The
+agent's context and configuration are versioned here, so the setup is
+reproducible instead of living in a chat window.
+
+### `AGENTS.md`
+
+[`AGENTS.md`](AGENTS.md) is the compact project context loaded automatically at
+the start of every agent session: architecture, setup, commands, conventions and
+CI constraints. Because it is committed and updated together with the code, it
+also works as a short onboarding document for humans.
+
+### MCP (Model Context Protocol)
+
+MCP is an open protocol that gives an AI agent a standard interface to external
+tools. This repository declares its tools in [`opencode.json`](opencode.json):
+
+- **GitHub MCP server** (remote) — lets the agent read issues and pull requests
+  and act on them in the context of the repository.
+- **Least privilege** — the toolset is restricted to `default,actions`, and the
+  access token is referenced via `{file:.opencode/github-token}`. That file is
+  gitignored, so no secret ever reaches the repository.
+- **Team-friendly** — the configuration is versioned with the code, so everyone
+  who clones the repository gets the same agent setup without personal paths.
+
+### Guardrails
+
+- The agent proposes changes; every diff is reviewed before it is committed.
+- `npm run lint` and `prettier --check .` must pass, and the affected spec is run
+  before a commit.
+- AI is used for scaffolding page objects and specs, maintaining the test-case
+  documentation, refactoring and failure triage. Test design, prioritisation and
+  the final review stay manual.
+- Real credentials live in a local `.env` that never leaves the machine.
 
 ## Project Structure
 
 ```text
-pages/
-├── LoginPage.js
-├── MainPage.js
-└── ProductPage.js
-
 cypress/
 ├── e2e/
 │   ├── login.cy.js
@@ -37,16 +85,26 @@ cypress/
 │   ├── product.cy.js
 │   └── cart.cy.js
 ├── fixtures/
+├── pages/
+│   ├── BasePage.js
+│   ├── LoginPage.js
+│   ├── MainPage.js
+│   └── ProductPage.js
 ├── reports/
 ├── screenshots/
 ├── support/
 │   ├── commands.js
-│   └── e2e.js
+│   ├── e2e.js
+│   └── routes.js
 └── videos/
 
+docs/
+└── test-cases.md
+
 cypress.config.js
-cypress.env.json
 package.json
+AGENTS.md
+opencode.json
 ```
 
 ## Features
@@ -128,8 +186,12 @@ Reports are generated automatically after test execution and can be found in:
 cypress/reports/
 ```
 
-Open the HTML report:
+Open the reports folder and pick the newest HTML file:
 
 ```bash
-start cypress/reports/mochawesome.html
+start cypress/reports
 ```
+
+Mochawesome runs with `overwrite: false`, so each execution adds a new numbered
+report (`mochawesome.html`, `mochawesome_001.html`, ...) instead of replacing the
+previous one. Pick the file with the highest number for the latest run.

@@ -7,7 +7,7 @@ describe("Product functionality", () => {
     MainPage.visit();
   });
 
-  it("displays product details", () => {
+  it("PRD-01 displays product details", () => {
     MainPage.openFirstProduct();
 
     cy.url().should("include", ROUTES.product);
