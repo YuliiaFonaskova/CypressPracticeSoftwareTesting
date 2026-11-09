@@ -28,6 +28,10 @@ to the spec that automates it.
 
 ## 2. Coverage matrix
 
+7 of the 25 cases are automated today — AUTH-01…AUTH-04, SRCH-01, PRD-01 and
+CART-01. Everything else is manual and listed in
+[section 9](#9-what-to-automate-next) in the recommended order.
+
 | ID      | Suite          | Automation | Spec                        |
 | ------- | -------------- | ---------- | --------------------------- |
 | AUTH-01 | Authentication | ✅         | `cypress/e2e/login.cy.js`   |

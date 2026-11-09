@@ -14,6 +14,8 @@ UI test automation project created with Cypress for the Practice Software Testin
 
 - [AUTH-01](docs/test-cases.md#auth-01--login-with-valid-credentials) — Successful login
 - [AUTH-02](docs/test-cases.md#auth-02--login-with-invalid-credentials) — Unsuccessful login
+- [AUTH-03](docs/test-cases.md#auth-03--submit-the-login-form-with-empty-fields) — Empty login form validation
+- [AUTH-04](docs/test-cases.md#auth-04--invalid-email-format) — Invalid email format
 - [SRCH-01](docs/test-cases.md#srch-01--search-for-a-product-and-add-it-to-the-cart) — Search product
 - [PRD-01](docs/test-cases.md#prd-01--product-details-are-displayed) — View product details
 - [CART-01](docs/test-cases.md#cart-01--add-a-product-to-the-cart) — Add product to cart
@@ -135,7 +137,7 @@ opencode.json
 ## Installation
 
 ```bash
-npm install
+npm ci
 ```
 
 ## Open Cypress Test Runner
