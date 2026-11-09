@@ -28,7 +28,7 @@ test case.
 
 | Suite          | Cases             | Automated |
 | -------------- | ----------------- | --------- |
-| Authentication | AUTH-01 … AUTH-07 | 2 of 7    |
+| Authentication | AUTH-01 … AUTH-07 | 4 of 7    |
 | Search         | SRCH-01 … SRCH-05 | 1 of 5    |
 | Product        | PRD-01 … PRD-04   | 1 of 4    |
 | Cart           | CART-01 … CART-07 | 1 of 7    |
@@ -37,6 +37,11 @@ test case.
 The coverage matrix in that document lists the exact spec file (or the missing
 one) for every case, together with the known gaps and the recommended automation
 order.
+
+> **Note:** AUTH-01 signs in to the public demo, where the shared seeded account
+> can be locked after too many failed attempts. A failure with "Account locked"
+> is an environment issue, not a test defect — CI runs against a locally seeded
+> instance instead.
 
 ## AI-Assisted Development
 

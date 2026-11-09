@@ -22,6 +22,16 @@ class LoginPage extends BasePage {
     return this.getByTestId("login-error");
   }
 
+  // Validation errors are form-level alerts: the input points to them via
+  // aria-describedby (email -> email-error), so the stable lookup is by id.
+  get emailFieldError() {
+    return cy.get("#email-error");
+  }
+
+  get passwordFieldError() {
+    return cy.get("#password-error");
+  }
+
   login(email, password) {
     this.fillField("email", email);
     this.fillField("password", password, { log: false });

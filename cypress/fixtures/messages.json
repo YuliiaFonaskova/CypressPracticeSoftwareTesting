@@ -1,0 +1,7 @@
+{
+  "login": {
+    "emailRequired": "Email is required",
+    "passwordRequired": "Password is required",
+    "emailFormat": "Email format is invalid"
+  }
+}

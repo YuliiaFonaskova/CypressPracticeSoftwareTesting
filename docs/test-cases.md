@@ -32,8 +32,8 @@ to the spec that automates it.
 | ------- | -------------- | ---------- | --------------------------- |
 | AUTH-01 | Authentication | ✅         | `cypress/e2e/login.cy.js`   |
 | AUTH-02 | Authentication | ✅         | `cypress/e2e/login.cy.js`   |
-| AUTH-03 | Authentication | ❌         | —                           |
-| AUTH-04 | Authentication | ❌         | —                           |
+| AUTH-03 | Authentication | ✅         | `cypress/e2e/login.cy.js`   |
+| AUTH-04 | Authentication | ✅         | `cypress/e2e/login.cy.js`   |
 | AUTH-05 | Authentication | ❌         | —                           |
 | AUTH-06 | Authentication | ❌         | —                           |
 | AUTH-07 | Authentication | ❌         | —                           |
@@ -79,6 +79,10 @@ to the spec that automates it.
 **Expected result:** the user lands on the Account page, the account menu is
 available in the header, and no error message is shown.
 
+> On the public demo the shared seeded account can be locked after too many
+> failed attempts ("Account locked"). That is an environment issue, not a product
+> defect — see [Known issues](#8-known-issues-and-gaps).
+
 ---
 
 ### AUTH-02 — Login with invalid credentials
@@ -104,12 +108,12 @@ stays on the login page, and no account data becomes accessible.
 
 ### AUTH-03 — Submit the login form with empty fields
 
-| Field         | Value                     |
-| ------------- | ------------------------- |
-| Priority      | P2                        |
-| Type          | Validation                |
-| Automation    | ❌                        |
-| Preconditions | The user is not signed in |
+| Field         | Value                        |
+| ------------- | ---------------------------- |
+| Priority      | P2                           |
+| Type          | Validation                   |
+| Automation    | ✅ `cypress/e2e/login.cy.js` |
+| Preconditions | The user is not signed in    |
 
 | #   | Action                                | Expected result                    |
 | --- | ------------------------------------- | ---------------------------------- |
@@ -124,12 +128,12 @@ request is made.
 
 ### AUTH-04 — Invalid email format
 
-| Field         | Value                     |
-| ------------- | ------------------------- |
-| Priority      | P2                        |
-| Type          | Validation                |
-| Automation    | ❌                        |
-| Preconditions | The user is not signed in |
+| Field         | Value                        |
+| ------------- | ---------------------------- |
+| Priority      | P2                           |
+| Type          | Validation                   |
+| Automation    | ✅ `cypress/e2e/login.cy.js` |
+| Preconditions | The user is not signed in    |
 
 | #   | Action                                       | Expected result         |
 | --- | -------------------------------------------- | ----------------------- |
@@ -587,15 +591,20 @@ corrected.
    message, not the cart row. A product-row assertion should be added.
 2. **There is no negative/validation case for checkout** — the highest-risk part
    of the application after search.
-3. **The public demo is behind Cloudflare.** CI cannot target
+3. **AUTH-01 is environment-dependent on the public demo.** The demo shares one
+   seeded account, which gets locked after too many failed sign-in attempts
+   ("Account locked, too many failed attempts"). When that happens AUTH-01 fails
+   for environmental reasons, not because of a product defect. The CI run uses
+   the local seeded account from `docker-compose.ci.yml` and is not affected.
+4. **The public demo is behind Cloudflare.** CI cannot target
    `practicesoftwaretesting.com` (403 for GitHub-hosted runners), so the checkout
    E2E cases must run against the local application from `docker-compose.ci.yml`
    (`BASE_URL=http://localhost:4200`).
 
 ## 9. What to automate next
 
-1. AUTH-03, AUTH-04 and AUTH-05 — cheap, fast, and they cover the negative login
-   path using the existing login page object.
+1. AUTH-05 — the remaining negative login case (valid email, wrong password),
+   using the existing login page object.
 2. CART-05, CART-06 and CART-07 — no new page objects needed, only cart
    selectors.
 3. E2E-01 — the main business scenario; requires a new checkout page object.
