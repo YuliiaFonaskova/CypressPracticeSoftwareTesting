@@ -28,13 +28,49 @@ preconditions, steps and expected results. The cases that are already automated
 are linked to their spec files, so every Cypress test can be traced back to a
 test case.
 
-| Suite          | Cases             | Automated |
-| -------------- | ----------------- | --------- |
-| Authentication | AUTH-01 … AUTH-07 | 4 of 7    |
-| Search         | SRCH-01 … SRCH-05 | 1 of 5    |
-| Product        | PRD-01 … PRD-04   | 1 of 4    |
-| Cart           | CART-01 … CART-07 | 1 of 7    |
-| Checkout (E2E) | E2E-01 … E2E-02   | 0 of 2    |
+### Coverage Summary
+
+Format: **ID** · Priority · Status — Title
+
+#### Authentication (`cypress/e2e/login.cy.js`)
+
+- **AUTH-01** · P1 · Automated — Login with valid credentials
+- **AUTH-02** · P1 · Automated — Login with invalid credentials
+- **AUTH-03** · P2 · Automated — Submit the login form with empty fields
+- **AUTH-04** · P2 · Automated — Invalid email format
+- **AUTH-05** · P2 · Manual — Valid email with an incorrect password
+- **AUTH-06** · P3 · Manual — Password is masked
+- **AUTH-07** · P1 · Manual — Sign out
+
+#### Search (`cypress/e2e/search.cy.js`)
+
+- **SRCH-01** · P1 · Automated — Search for a product and add it to the cart
+- **SRCH-02** · P2 · Manual — Search with no results
+- **SRCH-03** · P2 · Manual — Partial match and case insensitivity
+- **SRCH-04** · P3 · Manual — Search with whitespace and special characters
+- **SRCH-05** · P3 · Manual — Clearing the search restores the full catalog
+
+#### Product (`cypress/e2e/product.cy.js`)
+
+- **PRD-01** · P1 · Automated — Product details are displayed
+- **PRD-02** · P2 · Manual — Product page data completeness
+- **PRD-03** · P3 · Manual — Navigation back to the catalog
+- **PRD-04** · P2 · Manual — Changing the quantity before adding to the cart
+
+#### Cart (`cypress/e2e/cart.cy.js`)
+
+- **CART-01** · P1 · Automated — Add a product to the cart
+- **CART-02** · P2 · Manual — Add two different products
+- **CART-03** · P2 · Manual — Update the quantity in the cart
+- **CART-04** · P2 · Manual — Remove a product from the cart
+- **CART-05** · P2 · Manual — Empty cart
+- **CART-06** · P2 · Manual — Cart persists after a page reload
+- **CART-07** · P3 · Manual — Header cart counter
+
+#### Checkout (E2E) — no spec yet
+
+- **E2E-01** · P1 · Manual — Full path: search → cart → place an order
+- **E2E-02** · P2 · Manual — Required field validation on the address step
 
 The coverage matrix in that document lists the exact spec file (or the missing
 one) for every case, together with the known gaps and the recommended automation

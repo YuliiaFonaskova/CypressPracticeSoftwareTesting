@@ -32,33 +32,47 @@ to the spec that automates it.
 CART-01. Everything else is manual and listed in
 [section 9](#9-what-to-automate-next) in the recommended order.
 
-| ID      | Suite          | Automation | Spec                        |
-| ------- | -------------- | ---------- | --------------------------- |
-| AUTH-01 | Authentication | ✅         | `cypress/e2e/login.cy.js`   |
-| AUTH-02 | Authentication | ✅         | `cypress/e2e/login.cy.js`   |
-| AUTH-03 | Authentication | ✅         | `cypress/e2e/login.cy.js`   |
-| AUTH-04 | Authentication | ✅         | `cypress/e2e/login.cy.js`   |
-| AUTH-05 | Authentication | ❌         | —                           |
-| AUTH-06 | Authentication | ❌         | —                           |
-| AUTH-07 | Authentication | ❌         | —                           |
-| SRCH-01 | Search         | ✅         | `cypress/e2e/search.cy.js`  |
-| SRCH-02 | Search         | ❌         | —                           |
-| SRCH-03 | Search         | ❌         | —                           |
-| SRCH-04 | Search         | ❌         | —                           |
-| SRCH-05 | Search         | ❌         | —                           |
-| PRD-01  | Product        | ✅         | `cypress/e2e/product.cy.js` |
-| PRD-02  | Product        | ❌         | —                           |
-| PRD-03  | Product        | ❌         | —                           |
-| PRD-04  | Product        | ❌         | —                           |
-| CART-01 | Cart           | ✅         | `cypress/e2e/cart.cy.js`    |
-| CART-02 | Cart           | ❌         | —                           |
-| CART-03 | Cart           | ❌         | —                           |
-| CART-04 | Cart           | ❌         | —                           |
-| CART-05 | Cart           | ❌         | —                           |
-| CART-06 | Cart           | ❌         | —                           |
-| CART-07 | Cart           | ❌         | —                           |
-| E2E-01  | Checkout       | ❌         | —                           |
-| E2E-02  | Checkout       | ❌         | —                           |
+Format: **ID** · Priority · Status — Title
+
+#### Authentication (`cypress/e2e/login.cy.js`)
+
+- **AUTH-01** · P1 · Automated — Login with valid credentials
+- **AUTH-02** · P1 · Automated — Login with invalid credentials
+- **AUTH-03** · P2 · Automated — Submit the login form with empty fields
+- **AUTH-04** · P2 · Automated — Invalid email format
+- **AUTH-05** · P2 · Manual — Valid email with an incorrect password
+- **AUTH-06** · P3 · Manual — Password is masked
+- **AUTH-07** · P1 · Manual — Sign out
+
+#### Search (`cypress/e2e/search.cy.js`)
+
+- **SRCH-01** · P1 · Automated — Search for a product and add it to the cart
+- **SRCH-02** · P2 · Manual — Search with no results
+- **SRCH-03** · P2 · Manual — Partial match and case insensitivity
+- **SRCH-04** · P3 · Manual — Search with whitespace and special characters
+- **SRCH-05** · P3 · Manual — Clearing the search restores the full catalog
+
+#### Product (`cypress/e2e/product.cy.js`)
+
+- **PRD-01** · P1 · Automated — Product details are displayed
+- **PRD-02** · P2 · Manual — Product page data completeness
+- **PRD-03** · P3 · Manual — Navigation back to the catalog
+- **PRD-04** · P2 · Manual — Changing the quantity before adding to the cart
+
+#### Cart (`cypress/e2e/cart.cy.js`)
+
+- **CART-01** · P1 · Automated — Add a product to the cart
+- **CART-02** · P2 · Manual — Add two different products
+- **CART-03** · P2 · Manual — Update the quantity in the cart
+- **CART-04** · P2 · Manual — Remove a product from the cart
+- **CART-05** · P2 · Manual — Empty cart
+- **CART-06** · P2 · Manual — Cart persists after a page reload
+- **CART-07** · P3 · Manual — Header cart counter
+
+#### Checkout (E2E) — no spec yet
+
+- **E2E-01** · P1 · Manual — Full path: search → cart → place an order
+- **E2E-02** · P2 · Manual — Required field validation on the address step
 
 ---
 
