@@ -72,9 +72,9 @@ Format: **ID** · Priority · Status — Title
 - **E2E-01** · P1 · Manual — Full path: search → cart → place an order
 - **E2E-02** · P2 · Manual — Required field validation on the address step
 
-The coverage matrix in that document lists the exact spec file (or the missing
-one) for every case, together with the known gaps and the recommended automation
-order.
+The coverage list in that document groups every case by suite, marks it
+`Automated` or `Manual`, and names the spec file that runs it, together with the
+known gaps and the recommended automation order.
 
 > **Note:** AUTH-01 signs in to the public demo, where the shared seeded account
 > can be locked after too many failed attempts. A failure with "Account locked"
